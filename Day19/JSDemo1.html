@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Result</title>
+</head>
+<body>
+    <script>
+        let username = prompt("Enter your name:");
+         let subjects =["Hindi", "English", "Maths"];
+         let marks=[];
+        let total=0;
+         for(let i=0; i<subjects.length; i++){
+            marks[i]=Number(prompt("Enter marks obtained in " + subjects[i] + ":"));
+            total=total + marks[i];
+         }
+
+        let result;
+        if(total >=150){
+            result="passed";
+        }
+        else{
+            result="failed";
+        }
+
+        let message="Dear " + username +" you have " + result + " the exam";
+
+        document.write("<h2>" + message + "</h2>");
+
+        document.write("<h3>Subject-wise Marks</h3>");
+
+  for (let i = 0; i < subjects.length; i++) {
+    document.write(subjects[i] + " : " + marks[i] + "<br>");
+  }
+
+  document.write("Total Marks: " + total );
+  </script>
+    </body>
+</html>
