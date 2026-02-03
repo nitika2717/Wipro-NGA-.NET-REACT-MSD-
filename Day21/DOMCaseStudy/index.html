@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, seriff;
+            margin: 20px;
+        }
+        #eventDetails {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            width: 300px;
+        }
+        #eventList li {
+            cursor: pointer;
+            margin: 5px 0;
+            font-size: medium;
+        }
+        #eventList li:hover {
+            text-decoration: underline;
+        }
+        button {
+            margin: 5px;
+            padding: 5px 10px;
+            background-color: rgb(238, 196, 196);
+        }
+        h2 {
+            text-align: center;
+            font-size: larger;
+        }
+
+        </style>
+<body>
+
+<h2>Society Event Registration</h2>
+
+<ul id="eventList"></ul>
+
+<div id="eventDetails">
+  <h3 id="eventTitle"></h3>
+  <p id="eventDesc"></p>
+  <p>Participants: <span id="count">0</span></p> 
+
+  <button id="registerBtn">Register</button>
+  <button id="unregisterBtn">Unregister</button>
+</div>
+
+<button id="addEventBtn">Add New Event</button>
+
+<script>
+// Get references to DOM elements 
+    const eventList = document.getElementById('eventList'); 
+    const eventTitle = document.getElementById("eventTitle");
+    const eventDesc = document.getElementById("eventDesc");
+    const count = document.getElementById("count");
+    const registerBtn = document.getElementById("registerBtn");
+    const unregisterBtn = document.getElementById("unregisterBtn");
+    const addEventBtn = document.getElementById("addEventBtn");
+
+//sample event data
+let events = [
+  { title: "Community Cleanup", description: "Join us to clean up the neighborhood park.", participants: 10 },
+  { title: "Yoga Session", description: "yoga for fitness and well-being.", participants: 9 }
+];
+let selectedEventIndex = null; // track selected event
+
+// Display initial events
+function displayEvents() {
+  eventList.innerHTML = ""; // Clear old list
+
+  events.forEach(event => {  // loop through each event
+    const li = document.createElement("li"); // Create element , this li will show event title
+
+    li.textContent = event.title; //put events name in li
+
+     // Add click event to select event
+
+    li.addEventListener("click", () => {
+      handleEventSelection(event);
+    });
+
+    eventList.appendChild(li); // Add to DOM, visible on page
+  });
+}
+//handle event selection
+function handleEventSelection(event) { //function receives event object from click
+  selectedEvent = event;
+  //.textContent is a property of DOM elements that represents the text inside that element
+  eventTitle.textContent = event.title; // replaces text content of eventTitle with selected event title
+  eventDesc.textContent = event.description;
+  count.textContent = event.participants;
+}
+// Register button functionality
+registerBtn.addEventListener("click", () => {
+  if (!selectedEvent) {
+    alert("Please select an event first");
+    return;
+  }
+
+  selectedEvent.participants++;
+  count.textContent = selectedEvent.participants; // Update count display
+  alert("Registered Successfully!");
+});
+
+// Unregister button functionality
+unregisterBtn.addEventListener("click", () => {
+  if (!selectedEvent) {
+    alert("Please select an event first");
+    return;
+  }
+
+  if (selectedEvent.participants > 0) {
+    selectedEvent.participants--;
+    count.textContent = selectedEvent.participants;
+  } else {
+    alert("No participants to remove");
+  }
+});
+
+// Add new event functionality
+addEventBtn.addEventListener("click", () => {
+  const newEvent = {
+    title: "New Event " + (events.length + 1),
+    description: "Newly added event",
+    participants: 0
+  };
+
+  events.push(newEvent);
+  displayEvents();
+});
+displayEvents();
+
+</script>
+
+</body>
+</html>
